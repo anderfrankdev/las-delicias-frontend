@@ -25,7 +25,7 @@ const introductionView = {
       </div>
       <div class="nav-buttons">
         <button class="nav-button next" id="next">Continue</button>
-        <button class="nav-button log" onclick="window.location.hash='login'">
+        <button class="nav-button log" onclick="window.location.hash='signin'">
           Sign in
         </button>
       </div>
