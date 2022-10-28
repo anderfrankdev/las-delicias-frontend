@@ -36,6 +36,11 @@ const signinForm = `
 
 const signView =(type)=>{
 
+  let form;
+
+  if (type === "signup") form = signupForm
+  else if(type === "signin") form = signinForm
+
   return {
   
     html:`
@@ -44,9 +49,7 @@ const signView =(type)=>{
           <img src="/logo-bar.png" alt="">
         </div>
         <div class="form-container">
-          ${ type === "signup" ? signupForm
-              : type === "signin" ?  signinForm 
-                : ""}
+          ${form}
         </div>
         
         <footer class="footer">
@@ -148,7 +151,7 @@ const signView =(type)=>{
         background-size: cover;
       }
 
-      @media (min-width: 40em){
+      @media (min-width: 37.5em){
         #app{
           grid-template-columns: 3fr 2fr;
         }
@@ -158,6 +161,10 @@ const signView =(type)=>{
         .main{
           padding-top: 3rem;
           padding-bottom: 2rem;
+        }
+        .sign-options{
+          font-size: 0.9rem;
+          flex-direction:row;
         }
       }
 
