@@ -2,20 +2,17 @@ import {curry} from "/libs/functional.lib";
 import {getById} from "/libs/dom.lib";
 import {mountView} from "/libs/dom.lib";
 
-const viewsRouter = curry( async (listOfRoutes,state,event)=>{
+const viewsRouter = curry( async (routerOptions,event)=>{
   
-  getById("app").innerHTML = "";
-  getById("styles").innerHTML = "";
+  const { listOfRoutes, state } = routerOptions 
 
-  const route = listOfRoutes.filter( route => route.url === location.hash )[0];
+  const result = listOfRoutes.filter( route => route.url === location.hash )[0];
 
-  if(!route) return location.hash = "#introduction";
+  if(!result) return location.hash = "#introduction";
 
-  const { router, view } = route
+  const { handler, view } = result
  
-  return router 
-    ? router(view,state) 
-    : mountView(view,state)
+  return handler(view,state) 
 
 } )
 
