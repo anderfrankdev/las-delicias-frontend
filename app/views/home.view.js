@@ -4,6 +4,10 @@ const homeSectionView = `
     <input type="text" placeholder="Search on Las Delicias">
   </div>
   <div class="special-plate">
+    <h2>Shoyu ramen</h2>
+    <p class="discount">Discount 25%</p>
+    <button>Order now</button>
+    <img src="/ramen.jpg" alt="">
   </div>
   <div>
     <h2></h2>
@@ -11,7 +15,7 @@ const homeSectionView = `
   </div>
 `
 
-const homeView = (state)=> {
+const homeView = (styles,state)=> {
 
   return {
     html:`
@@ -30,8 +34,7 @@ const homeView = (state)=> {
     </nav>
     `,
     
-    css:`
-    `  
+    css:styles
   }
   
 

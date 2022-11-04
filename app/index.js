@@ -6,6 +6,7 @@ import signView from "./views/sessions.view";
 import {presentationDeliveryView} from "./views/introduction.view";
 import {presentationFoodView} from "./views/introduction.view";
 import homeView from "./views/home.view";
+import homeStyles from "./styles/home.style.css"
 import {introductionHandler} from "./handlers/introduction.handler";
 import {signinHandler,signupHandler} from "./handlers/auth.handler";
 import {homeHandler} from "./handlers/home.handler";
@@ -20,7 +21,7 @@ const listOfRoutes = f([
   f({url:"#introduction",handler:introductionHandler, view:introductionView}),
   f({url:"#signup",handler:signupHandler, view:signView("signup")}),
   f({url:"#signin",handler:signinHandler, view:signView("signin")}),
-  f({url:"#home",handler:homeHandler, view:homeView})
+  f({url:"#home",handler:homeHandler, view:homeView(homeStyles)})
 ]);
 
 const routerOptions = {
