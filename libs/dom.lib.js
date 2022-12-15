@@ -3,7 +3,7 @@ import {curry} from "/libs/functional.lib";
 export const getById = (id) => document.getElementById(id)
 
 export const viewToApp = curry((action ,view,state) => {
-	
+
 	const {html,css} = typeof view === 'function' 
     	? view(state)
     	: view;

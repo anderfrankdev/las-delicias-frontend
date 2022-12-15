@@ -14,7 +14,7 @@
 
 .main-content{
   grid-area: main;
-  overflow-y: auto;
+  overflow-x: auto;
   padding-bottom:2rem ;
 }
 .nav-bar{
@@ -155,21 +155,231 @@
 }
 
 .card{
-  margin-right: 1rem;
+  width: calc( var( --step-9 ) + 1rem);
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: #eee;
+  border-radius: 8px;
+  margin-right: 3px;
+  cursor: pointer;
 }
-
+.card>p{
+  margin-block: .4rem;
+}
 .card>img{
   width: var(--step-9);
   height: var(--step-9);
+  border-radius: 8px;
+}
+
+.menu-nav{
+  display: flex;
+  overflow-x: auto;
+  margin: 0 auto;
+  height: fit-content;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.menu-nav > .menu-item{
+  padding-inline: 0.5rem;
+  padding-block: 0.5rem;
+  margin-inline: 0.5rem;
+  width: auto;
+  white-space: nowrap;
+  border-top: 3px solid transparent;
+  margin-block: 0.5rem;
+  cursor: pointer;
+}
+
+.menu-item>p{
+  margin-block: 0;
+}
+
+.menu-item.selected{
+  border-top: 3px solid #a00;
+ 
+}
+
+.menu-list{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 1rem;
+  white-space: initial;
+}
+
+.item_price{
+  color: #050;
+}
+
+.cart{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: min-content min-content min-content;
+  grid-template-areas: 
+    "title"
+    "items"
+    "count";
+  padding-left: 0rem;
+  background-color: #eee;
+  
+}
+.cart_title{
+  grid-area: title;
+  margin-top: 2rem;
+  padding-left: 2rem;
+  font-size: var(--step-1);
+}
+.cart_items{
+  grid-area: items;
+  margin-bottom: 2rem;
+  padding-right: 0.3rem;
+  padding-left: 0.3rem;
+}
+.cart_count{
+  grid-area: count;
+  background-color: #fff;
+  text-align: center;
+  padding-block: 1rem;
+  padding-inline: 1rem;
+  
+}
+.cart_ad_msg{
+  margin-bottom: 0;
+}
+.cart_count_estimted{
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--step-1);
+}
+.cart_checkout{
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: orange;
+  border-radius: 10px;
+  font-weight: bolder;
+  cursor: pointer;
+}
+.cart_item{
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-template-rows: min-content min-content min-content min-content;
+  grid-template-areas: 
+  "img title"
+  "img price"
+  "img amount"
+  "img btn";
+  background-color: white;
+  padding: var(--step--1);
+  border-block: 1px solid #000;
+  align-content: start;
+  justify-items: start;
+  grid-gap: 1rem;
+}
+.item_img{
+  grid-area: img;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.item_title{
+  grid-area: title;
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bolder;
+}
+.item_amount{
+  grid-area: amount;
+  width:100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.item_price{
+  grid-area: price;
+  text-align: right;
+  margin: 0;
+  justify-self: end;
+}
+.item_btn{
+  grid-area: btn;
+  height: 1.5rem;
+  padding-inline: 0.5rem;
+  width: 100%;
+}
+.item_img>img{
+  width: var(--step-8);
+  height: var(--step-8);
+}
+.card_item_btn{
+  width: 100%;
+  margin-bottom: 6px;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  padding-block: 0.3rem;
+  font-weight: bolder;
+  font-size: var(--step--1);
+  background-color: orange;
+  color: #111;
+  cursor: pointer;
+}
+.account_actions{
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: space-around;
+  flex-direction: column;
+}
+.account_actions > .action{
+  border-radius: 10px;
+  border: 1px solid #aaa;
+  height: 6ch;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+.action:hover{
+  background-color: #eee;
+}
+.account_orders{
+  padding: var(--step-1);
+  height: 100%;
+}
+.back{
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+.back > span{
+  cursor: pointer;
+}
+
+.cards_container{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 @media (min-width: 37.5em){
+  .account_actions{
+    padding: 4rem;
+  }
   .app{
     grid-template-columns: 4rem auto;
     grid-auto-rows: min-content 1fr;
     grid-template-areas: 
     "nav content-title"
     "nav main";
+    overflow: auto;
   }
   .search{
     width: 70%;
@@ -177,10 +387,6 @@
   }
   .main-content{
     grid-area: main;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
   }
   .nav-bar{
     grid-area: nav;
@@ -190,6 +396,7 @@
     height: calc( var(--step-9) - 1.4rem);
     width: var(--step-9);
   }
+  
   .carrousel, .special-plate{
     height: fit-content;
   }
@@ -199,9 +406,6 @@
   }
   .special-plate{
     width: 90%;
-  }
-  .search{
-    margin-inline: 1rem 1rem;
   }
   .special{
     width: 100%;
@@ -213,6 +417,21 @@
   }
   .special-plate>button{
     width: calc(100% - 1rem);
-    
+  }
+  .cart{
+    margin-inline: 2rem;
+    margin-top: 2rem;
+  }
+  .cart_items{
+      margin-bottom: 2rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+  .cart_item{
+    grid-template-rows: min-content min-content min-content;
+    grid-template-areas: 
+      "img title"
+      "img price"
+      "btn amount";
   }
 }
