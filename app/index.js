@@ -18,15 +18,56 @@ const f = Object.freeze,
 const state={name:"Ander"};
 
 const listOfRoutes = f([
-  f({url:"#introduction",handler:introductionHandler, view:introductionView}),
-  f({url:"#signup",handler:signupHandler, view:signView("signup")}),
-  f({url:"#signin",handler:signinHandler, view:signView("signin")}),
-  f({url:"#home",handler:homeHandler, view:homeView('home',homeStyles)}),
-  f({url:"#home/menu",handler:homeHandler, view:homeView('menu',homeStyles)}),
-  f({url:"#home/cart",handler:homeHandler, view:homeView('cart',homeStyles)}),
-  f({url:"#home/account",handler:homeHandler, view:homeView('account',homeStyles)}),
-  f({url:"#home/account/addresses",handler:homeHandler, view:homeView('account/addresses',homeStyles)}),
-  f({url:"#home/account/orders",handler:homeHandler, view:homeView('account/orders',homeStyles)})
+  f({
+    url:"#introduction",
+    handler:introductionHandler, 
+    view:introductionView
+  }),
+  f({
+    url:"#signup",
+    handler:signupHandler, 
+    view:signView("signup")
+  }),
+  f({
+    url:"#signin",
+    handler:signinHandler, 
+    view:signView("signin")
+  }),
+  f({
+    url:"#home",
+    handler:homeHandler, 
+    view:homeView('home',homeStyles)
+  }),
+  f({
+    url:"#home/menu",
+    handler:homeHandler, 
+    view:homeView('menu',homeStyles)
+  }),
+  f({
+    url:"#home/cart",
+    handler:homeHandler, 
+    view:homeView('cart',homeStyles)
+  }),
+  f({
+    url:"#home/account",
+    handler:homeHandler, 
+    view:homeView('account',homeStyles)
+  }),
+  f({
+    url:"#home/account/addresses",
+    handler:homeHandler, 
+    view:homeView('account/addresses',homeStyles)
+  }),
+  f({
+    url:"#home/account/orders",
+    handler:homeHandler, 
+    view:homeView('account/orders',homeStyles)
+  }),
+  f({
+    url:"#home/account/favorites",
+    handler:homeHandler, 
+    view:homeView('account/favorites',homeStyles)
+  })
 ]);
 
 const routerOptions = {

@@ -9,6 +9,7 @@ const plateCards = (items, section )=>{
         <p class="item_tittle">${item.title}</p>
         <p class="item_price">${item.price}$</p>
         <button class="card_item_btn">Add to cart</button>
+        <button class="card_item_btn" style="background-color: #fcf;">Add to favorites</button>
       </div>
     `)
   
@@ -349,7 +350,7 @@ const accountSectionView = (state, section) => {
     <div class="account_actions">
       <p class="action" onclick="window.location='#home/account/orders'">Your previous orders</p>
       <p class="action" onclick="window.location='#home/account/addresses'">Your addresses</p>
-      <p class="action">Your favorite plates</p>
+      <p class="action" onclick="window.location='#home/account/favorites'">Your favorite plates</p>
     </div>
   `
 
@@ -372,11 +373,21 @@ const accountSectionView = (state, section) => {
     </div>
   `
 
+  const favorites = `
+    <div class="account_orders">
+      <div class="back" onclick="window.location='#home/account'"><img src="/arrow.svg" with="40" height="40" alt=""></span></div>
+      <div class="cards_container">
+        ${plateCards(ordersArr,"menu")}
+      </div> 
+    </div>
+  `
+
   let html;
   
   if (section==="main") html = main
   else if(section==="orders") html = orders
   else if(section==="addresses") html = addresses
+  else if(section==="favorites") html = favorites
 
   return html
 }
@@ -404,6 +415,9 @@ const homeView = curry((content,styles,state) => {
   }else if(content==='account/addresses'){
     mainContent = accountSectionView(state,"addresses")
     title="Your addresses"
+  }else if(content==='account/favorites'){
+    mainContent = accountSectionView(state,"favorites")
+    title="Your favorites"
   }else {
     console.error("View not found")
   }
