@@ -11,7 +11,7 @@ const signupForm = `
     </div>
     <div class="input-container">
       <label for="password">Password</label>
-      <input type="text" id="password">
+      <input type="password" id="password">
     </div>
     <div class="sign-options"><a href="">Forgot your password?</a><a href="#signin">Have an account?</a></div>
     <input type="submit" value="Sign up" id="signup">
@@ -27,7 +27,7 @@ const signinForm = `
     </div>
     <div class="input-container">
       <label for="password">Password</label>
-      <input type="text" id="password">
+      <input type="password" id="password">
     </div>
     <div class="sign-options"><a href="">Forgot your password?</a><a href="#signup">Need an account?</a></div>
     <input type="submit" value="Sign in" id="signin">
@@ -149,8 +149,28 @@ const signView =(type)=>{
       .presentation{
         background-image: url("/bread.jpg");
         background-size: cover;
+      }   
+      .login_error{
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        background-color: #69b550;
+        padding-inline: 2rem;
+        padding-block: 1rem;
+        color: #fff;
       }
-
+      .close_btn{
+        background-color: #f00;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
       @media (min-width: 37.5em){
         #app{
           grid-template-columns: 3fr 2fr;
@@ -165,6 +185,9 @@ const signView =(type)=>{
         .sign-options{
           font-size: 0.9rem;
           flex-direction:row;
+        }
+        .login_error{
+          left:initial;
         }
       }
 

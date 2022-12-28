@@ -2,9 +2,8 @@ import {curry} from "/libs/functional.lib";
 import {getById} from "/libs/dom.lib";
 import {mountView} from "/libs/dom.lib";
 
-const viewsRouter = curry( async (routerOptions,event)=>{
+const viewsRouter = curry( async (listOfRoutes,state,event)=>{
   
-  const { listOfRoutes, state } = routerOptions 
 
   const result = listOfRoutes.filter( route => route.url === location.hash )[0];
 

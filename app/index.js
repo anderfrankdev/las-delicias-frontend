@@ -1,6 +1,7 @@
 import viewsRouter from "./presenters/router.presenter";
 import {nextPresentation} from "./presenters/introduction.presenter";
 import {previousPresentation} from "./presenters/introduction.presenter";
+import {signupPresenter} from "./presenters/sessions.presenter";
 import introductionView from "./views/introduction.view";
 import signView from "./views/sessions.view";
 import {presentationDeliveryView} from "./views/introduction.view";
@@ -10,12 +11,14 @@ import homeStyles from "./styles/home.style.css?inline";
 import {introductionHandler} from "./handlers/introduction.handler";
 import {signinHandler,signupHandler} from "./handlers/auth.handler";
 import {homeHandler} from "./handlers/home.handler";
+import {signupModel} from "./models/Sessions.model";
+import State from "./models/State.model";
 
 const f = Object.freeze,
   d = document,
   w = window;
 
-const state={name:"Ander"};
+let state = new State();
 
 const listOfRoutes = f([
   f({
@@ -76,10 +79,11 @@ const routerOptions = {
 }
 
 const listOfEventPresenters = f([
-  f({element:d,type:'DOMContentLoaded', presenter:viewsRouter(routerOptions)}),
-  f({element:w,type:'hashchange', presenter:viewsRouter(routerOptions)}),
+  f({element:d,type:'DOMContentLoaded', presenter:viewsRouter(listOfRoutes,state)}),
+  f({element:w,type:'hashchange', presenter:viewsRouter(listOfRoutes,state)}),
   f({element:d,type:'click', presenter:nextPresentation(presentationDeliveryView,state)}),
-  f({element:d,type:'click', presenter:previousPresentation(presentationFoodView,state)})
+  f({element:d,type:'click', presenter:previousPresentation(presentationFoodView,state)}),
+  f({element:d,type:'click', presenter:signupPresenter(signupModel,state)})
 ]);
 
 listOfEventPresenters.forEach(event=>{
