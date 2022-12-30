@@ -1,36 +1,55 @@
 import {getById} from "/libs/dom.lib";
 import {curry} from "/libs/functional.lib";
 
-export const signupPresenter = curry( async  ( signupModel, state, event)=>{
+export const signPresenter = curry( async  ( signModel, state, event)=>{
   
-  let newUserData = {}, 
+  let userData = {}, 
     result = {},
     appData = {}
 
 
   if (event.target.id==="signup"){
-
     event.preventDefault()
 
-    
+    const {signup} = signModel
 
-    newUserData = {
+
+    userData = {
       name:getById("fullname").value,
       email:getById("email").value,
       password:getById("password").value
     }
 
 
-    result = await signupModel(newUserData)
+    result = await signup(userData)
     console.log(result)
 
     appData = result.data.createUser
+    state.setState = appData
     
     if (appData) window.location.hash="#home"
 
-    state.setState = appData
 
-    console.log(state.getState)
+  }else if(event.target.id==="signin"){
+
+    event.preventDefault()
+
+    const {signin} = signModel
+
+    userData = {
+      email:getById("email").value,
+      password:getById("password").value
+    }
+
+
+    result = await signin(userData)
+
+    appData = result.data.login
+    state.setState = appData
+    
+    if (appData) window.location.hash="#home"
+
+
   }
 
   if (result?.errors) {
@@ -51,7 +70,7 @@ export const signupPresenter = curry( async  ( signupModel, state, event)=>{
     setTimeout(()=>{
       document
       .getElementById('login_error')
-      .remove()
+      ?.remove()
     },5000)
   }
 

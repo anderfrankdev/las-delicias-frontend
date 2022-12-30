@@ -1,7 +1,7 @@
 import viewsRouter from "./presenters/router.presenter";
 import {nextPresentation} from "./presenters/introduction.presenter";
 import {previousPresentation} from "./presenters/introduction.presenter";
-import {signupPresenter} from "./presenters/sessions.presenter";
+import {signPresenter} from "./presenters/sessions.presenter";
 import introductionView from "./views/introduction.view";
 import signView from "./views/sessions.view";
 import {presentationDeliveryView} from "./views/introduction.view";
@@ -9,10 +9,12 @@ import {presentationFoodView} from "./views/introduction.view";
 import homeView from "./views/home.view";
 import homeStyles from "./styles/home.style.css?inline";
 import {introductionHandler} from "./handlers/introduction.handler";
-import {signinHandler,signupHandler} from "./handlers/auth.handler";
+import {signHandler} from "./handlers/auth.handler";
 import {homeHandler} from "./handlers/home.handler";
-import {signupModel} from "./models/Sessions.model";
+import signModel from "./models/Sessions.model";
 import State from "./models/State.model";
+import {checkSessionModel} from "./models/Sessions.model";
+import {checkFormInput} from "./presenters/form.presenter";
 
 const f = Object.freeze,
   d = document,
@@ -28,12 +30,12 @@ const listOfRoutes = f([
   }),
   f({
     url:"#signup",
-    handler:signupHandler, 
+    handler:signHandler(checkSessionModel), 
     view:signView("signup")
   }),
   f({
     url:"#signin",
-    handler:signinHandler, 
+    handler:signHandler(checkSessionModel), 
     view:signView("signin")
   }),
   f({
@@ -73,20 +75,16 @@ const listOfRoutes = f([
   })
 ]);
 
-const routerOptions = {
-  state,
-  listOfRoutes
-}
-
 const listOfEventPresenters = f([
   f({element:d,type:'DOMContentLoaded', presenter:viewsRouter(listOfRoutes,state)}),
   f({element:w,type:'hashchange', presenter:viewsRouter(listOfRoutes,state)}),
   f({element:d,type:'click', presenter:nextPresentation(presentationDeliveryView,state)}),
   f({element:d,type:'click', presenter:previousPresentation(presentationFoodView,state)}),
-  f({element:d,type:'click', presenter:signupPresenter(signupModel,state)})
+  f({element:d,type:'click', presenter:signPresenter(signModel,state)}),
+  f({element:d,type:'input', presenter:checkFormInput})
 ]);
 
 listOfEventPresenters.forEach(event=>{
   const {element,type,presenter} = event;
-  element.addEventListener(type,presenter)
+  element.addEventListener(type,presenter);
 })

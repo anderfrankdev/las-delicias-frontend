@@ -14,7 +14,7 @@ const signupForm = `
       <input type="password" id="password">
     </div>
     <div class="sign-options"><a href="">Forgot your password?</a><a href="#signin">Have an account?</a></div>
-    <input type="submit" value="Sign up" id="signup">
+    <input type="submit" value="Sign up" id="signup" disabled="">
   </form>
 `
 
@@ -30,7 +30,7 @@ const signinForm = `
       <input type="password" id="password">
     </div>
     <div class="sign-options"><a href="">Forgot your password?</a><a href="#signup">Need an account?</a></div>
-    <input type="submit" value="Sign in" id="signin">
+    <input type="submit" value="Sign in" id="signin" disabled="">
   </form>
 `
 
@@ -145,7 +145,9 @@ const signView =(type)=>{
         color: #333;
         text-align:center;
       }
-
+      .invalid_password{
+        color: #b00;
+      }
       .presentation{
         background-image: url("/bread.jpg");
         background-size: cover;

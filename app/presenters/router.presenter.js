@@ -4,6 +4,7 @@ import {mountView} from "/libs/dom.lib";
 
 const viewsRouter = curry( async (listOfRoutes,state,event)=>{
   
+  getById("app").innerHTML=""
 
   const result = listOfRoutes.filter( route => route.url === location.hash )[0];
 
