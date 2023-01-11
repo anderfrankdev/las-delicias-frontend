@@ -1,4 +1,4 @@
-const signupForm = `
+ const signupForm = `
   <h1 class="">Sign up for an account</h1>
   <form action="">
     <div class="input-container">
@@ -7,14 +7,14 @@ const signupForm = `
     </div>
     <div class="input-container">
       <label for="email">Email</label>
-      <input type="text" id="email">
+      <input type="text" id="email" data-valid="">
     </div>
     <div class="input-container">
       <label for="password">Password</label>
-      <input type="password" id="password">
+      <input type="password" id="password" data-valid="">
     </div>
     <div class="sign-options"><a href="">Forgot your password?</a><a href="#signin">Have an account?</a></div>
-    <input type="submit" value="Sign up" id="signup" disabled="">
+    <input type="submit" value="Sign up" id="signup" >
   </form>
 `
 
@@ -23,14 +23,14 @@ const signinForm = `
   <form action="">
     <div class="input-container">
       <label for="email">Email</label>
-      <input type="text" id="email">
+      <input type="text" id="email" data-valid="">
     </div>
     <div class="input-container">
       <label for="password">Password</label>
-      <input type="password" id="password">
+      <input type="password" id="password" data-valid="">
     </div>
     <div class="sign-options"><a href="">Forgot your password?</a><a href="#signup">Need an account?</a></div>
-    <input type="submit" value="Sign in" id="signin" disabled="">
+    <input type="submit" value="Sign in" id="signin" >
   </form>
 `
 

@@ -4,8 +4,8 @@ const plateCards = (items, section )=>{
   let cards="";
 
   if(section === "menu") items.forEach( item => cards += `
-      <div class="card">
-        <img src="${item.img}" alt="">
+      <div class="card price">
+        <img src="${item?.images?item.images[0]:item.img}" class="card_img" alt="">
         <p class="item_tittle">${item.title}</p>
         <p class="item_price">${item.price}$</p>
         <button class="card_item_btn">Add to cart</button>
@@ -187,48 +187,7 @@ const menuNav = (items) => {
 
 const menuSectionView = (state)=>{
 
-  const items = [
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    }
-  ]
+  const {plates} = state.getState
 
   return `
     ${searchBar}
@@ -247,9 +206,7 @@ const menuSectionView = (state)=>{
       ]
     )}
     <div class="menu-list">
-      ${plateCards(items,"menu")}  
-      ${plateCards(items,"menu")}  
-      ${plateCards(items,"menu")}  
+      ${plateCards(plates,"menu")}    
     </div>
   `
 }
@@ -351,6 +308,7 @@ const accountSectionView = (state, section) => {
       <p class="action" onclick="window.location='#home/account/orders'">Your previous orders</p>
       <p class="action" onclick="window.location='#home/account/addresses'">Your addresses</p>
       <p class="action" onclick="window.location='#home/account/favorites'">Your favorite plates</p>
+      <p class="action logout" id="logout">Logout</p>
     </div>
   `
 
@@ -444,5 +402,11 @@ const homeView = curry((content,styles,state) => {
   
 
 })
+
+export const plateModal = `
+  <div class="modal" id="modal">
+    <div class="close_modal" id="close_modal">X</div>
+  </div>
+`
 
 export default homeView

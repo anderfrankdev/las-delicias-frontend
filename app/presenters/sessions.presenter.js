@@ -2,14 +2,28 @@ import {getById} from "/libs/dom.lib";
 import {curry} from "/libs/functional.lib";
 
 export const signPresenter = curry( async  ( signModel, state, event)=>{
-  
+
+  const validIds = [
+    "signup",
+    "signin"
+  ]
+
+  const id = event.target.id
+
+  if (!validIds.includes(id)) return
+  event.preventDefault()
+
+  const inputsAreValid = 
+    !(!getById("email").dataset.valid)
+    && !(!getById("password").dataset.valid)
+
+  if (!inputsAreValid) return
+
   let userData = {}, 
     result = {},
     appData = {}
 
-
   if (event.target.id==="signup"){
-    event.preventDefault()
 
     const {signup} = signModel
 
@@ -75,3 +89,19 @@ export const signPresenter = curry( async  ( signModel, state, event)=>{
   }
 
 });
+
+export const signoutPresenter = curry( async  ( signoutModel, state, event)=>{
+
+  if (event.target.id==="logout") {
+
+    const data = await signoutModel()
+
+    if(!data?.errors) {
+      
+      window.location.hash="#signin"
+      state.deleteState()    
+    }
+
+  }
+
+})

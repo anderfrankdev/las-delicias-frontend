@@ -10,6 +10,7 @@
     "nav";
   font-family: arial;
   overflow: hidden;
+  position: relative;
 }
 
 .main-content{
@@ -349,6 +350,9 @@
 .action:hover{
   background-color: #eee;
 }
+.action.logout{
+  border-color: #e00;
+}
 .account_orders{
   padding: var(--step-1);
   height: 100%;
@@ -367,6 +371,32 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.modal{
+  width: 80vw;
+  height: 80vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  padding: 1rem;
+  background-color: blue;
+}
+
+.close_modal{
+  background-color: red;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 0;
+  cursor: pointer;
 }
 
 @media (min-width: 37.5em){

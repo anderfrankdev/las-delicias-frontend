@@ -1,20 +1,27 @@
 import viewsRouter from "./presenters/router.presenter";
 import {nextPresentation} from "./presenters/introduction.presenter";
 import {previousPresentation} from "./presenters/introduction.presenter";
-import {signPresenter} from "./presenters/sessions.presenter";
+import {
+  signPresenter,
+  signoutPresenter
+} from "./presenters/sessions.presenter";
 import introductionView from "./views/introduction.view";
 import signView from "./views/sessions.view";
 import {presentationDeliveryView} from "./views/introduction.view";
 import {presentationFoodView} from "./views/introduction.view";
 import homeView from "./views/home.view";
+import {plateModal} from "./views/home.view";
 import homeStyles from "./styles/home.style.css?inline";
 import {introductionHandler} from "./handlers/introduction.handler";
 import {signHandler} from "./handlers/auth.handler";
 import {homeHandler} from "./handlers/home.handler";
 import signModel from "./models/Sessions.model";
+import {signoutModel} from "./models/Sessions.model";
 import State from "./models/State.model";
 import {checkSessionModel} from "./models/Sessions.model";
+import {getPlatesModel} from "./models/Plates.model"
 import {checkFormInput} from "./presenters/form.presenter";
+import {showPlate} from "./presenters/plates.presenter";
 
 const f = Object.freeze,
   d = document,
@@ -25,7 +32,7 @@ let state = new State();
 const listOfRoutes = f([
   f({
     url:"#introduction",
-    handler:introductionHandler, 
+    handler:introductionHandler(checkSessionModel), 
     view:introductionView
   }),
   f({
@@ -40,48 +47,103 @@ const listOfRoutes = f([
   }),
   f({
     url:"#home",
-    handler:homeHandler, 
+    handler:homeHandler({
+      checkSessionModel,
+      getPlatesModel
+    }), 
     view:homeView('home',homeStyles)
   }),
   f({
     url:"#home/menu",
-    handler:homeHandler, 
+    handler:homeHandler({
+      checkSessionModel,
+      getPlatesModel
+    }), 
     view:homeView('menu',homeStyles)
   }),
   f({
     url:"#home/cart",
-    handler:homeHandler, 
+    handler:homeHandler({
+      checkSessionModel,
+      getPlatesModel
+    }), 
     view:homeView('cart',homeStyles)
   }),
   f({
     url:"#home/account",
-    handler:homeHandler, 
+    handler:homeHandler({
+      checkSessionModel,
+      getPlatesModel
+    }), 
     view:homeView('account',homeStyles)
   }),
   f({
     url:"#home/account/addresses",
-    handler:homeHandler, 
+    handler:homeHandler({
+      checkSessionModel,
+      getPlatesModel
+    }), 
     view:homeView('account/addresses',homeStyles)
   }),
   f({
     url:"#home/account/orders",
-    handler:homeHandler, 
+    handler:homeHandler({
+      checkSessionModel,
+      getPlatesModel
+    }), 
     view:homeView('account/orders',homeStyles)
   }),
   f({
     url:"#home/account/favorites",
-    handler:homeHandler, 
+    handler:homeHandler({
+      checkSessionModel,
+      getPlatesModel
+    }), 
     view:homeView('account/favorites',homeStyles)
   })
 ]);
 
 const listOfEventPresenters = f([
-  f({element:d,type:'DOMContentLoaded', presenter:viewsRouter(listOfRoutes,state)}),
-  f({element:w,type:'hashchange', presenter:viewsRouter(listOfRoutes,state)}),
-  f({element:d,type:'click', presenter:nextPresentation(presentationDeliveryView,state)}),
-  f({element:d,type:'click', presenter:previousPresentation(presentationFoodView,state)}),
-  f({element:d,type:'click', presenter:signPresenter(signModel,state)}),
-  f({element:d,type:'input', presenter:checkFormInput})
+  f({
+    element:d,
+    type:'DOMContentLoaded', 
+    presenter:viewsRouter(listOfRoutes,state)
+  }),
+  f({
+    element:w,
+    type:'hashchange', 
+    presenter:viewsRouter(listOfRoutes,state)
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:nextPresentation(presentationDeliveryView,state)
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:previousPresentation(presentationFoodView,state)
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:signPresenter(signModel,state)
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:signoutPresenter(signoutModel,state)
+  }),
+  f({
+    element:d,
+    type:'input', 
+    presenter:checkFormInput
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:showPlate(plateModal)
+  })
 ]);
 
 listOfEventPresenters.forEach(event=>{

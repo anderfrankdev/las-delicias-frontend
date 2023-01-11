@@ -51,6 +51,27 @@ export const signin = async (data) =>{
 
 }
 
+export const signoutModel = async () =>{
+
+  const query = `{
+    logout{
+      message
+    }
+  }`
+
+  const userData = await fetch('http://localhost:8080/api',{
+    method:"POST",
+    mode:"cors",
+    credentials:"include",
+    headers:{"Content-Type": "application/json; charset=utf-8" },
+    body:JSON.stringify({
+      query:query
+    })
+  }).then(res=>res.json())
+
+  return userData
+}
+
 export const checkSessionModel = async (...toRequest) =>{
 
   const query = `{

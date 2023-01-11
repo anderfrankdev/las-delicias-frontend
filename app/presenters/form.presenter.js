@@ -23,8 +23,7 @@ export const checkFormInput = curry( async  ( event )=>{
 
 		if (OK) {
 			input.style.outline = "2px solid green"
-			document.querySelector("[type='submit']").disabled=false
-
+			input.dataset.valid="true"
 		}
 		else {
 
@@ -38,7 +37,8 @@ export const checkFormInput = curry( async  ( event )=>{
 
 			input.style.outline = "2px solid red"
 			input.insertAdjacentHTML("afterend",html) 
-			document.querySelector("[type='submit']").disabled=true
+			input.dataset.valid=""
+
 		}
 		
 	}else if(input.id==="email"){
@@ -46,12 +46,12 @@ export const checkFormInput = curry( async  ( event )=>{
 
 		if (OK) {
 			input.style.outline = "2px solid green"
-			document.querySelector("[type='submit']").disabled=false
-
+			input.dataset.valid="true"
 		}
 		else {
 			input.style.outline = "2px solid red"
-			document.querySelector("[type='submit']").disabled=true
+			input.dataset.valid=""
+
 		}
 	}
 });
