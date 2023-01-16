@@ -374,16 +374,62 @@
 }
 
 .modal{
-  width: 80vw;
-  height: 80vh;
+  width: 100%;
+  height: 100vh;
   position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
+  background-color: #fff;
+  overflow: auto;
   padding: 1rem;
-  background-color: blue;
+}
+
+.modal_content{
+  height: calc( 100% - 2rem ) ;
+  padding-block: 1rem ;
+}
+.modal_images{
+  width: 100%;
+  overflow: hidden;
+}
+.main_image{
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+.main_image img{
+  width: 100%;
+  height: 100%;
+}
+.group{
+  display: none;
+}
+.group>img{
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+  margin-inline: 0.2rem;
+}
+.modal_title{
+  grid-area: modal-title;
+  height: fit-content;
+}
+.modal_description{
+  grid-area: modal-description;
+  margin-block: 1rem;
+}
+.modal_ingridients{
+  grid-area: modal-ingridients;
+  overflow-y: auto;
+}
+
+.modal_resume{
+  grid-area: modal-resume;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  margin: 1rem;
+}
+.modal_amount{
+  margin-block: 1rem;
 }
 
 .close_modal{
@@ -398,7 +444,6 @@
   padding: 0;
   cursor: pointer;
 }
-
 @media (min-width: 37.5em){
   .account_actions{
     padding: 4rem;
@@ -464,4 +509,81 @@
       "img price"
       "btn amount";
   }
+  .modal{
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    padding: 1rem;
+    width: 80vw;
+    height: 80vh;
+    overflow: initial;
+  }
+
+  .modal_content{
+    display: grid;
+    grid-template-columns:1fr 1.5fr 0.5fr ;
+    grid-template-rows: min-content min-content 1fr;
+    grid-template-areas: 
+      "images modal-title modal-resume "
+      "images modal-description modal-resume"
+      "images modal-ingridients modal-resume";
+  }
+  .modal_images{
+    grid-area: images;
+    width: 100%;
+    overflow: hidden;
+  }
+  .main_image{
+    width: 100%;
+    height: 85%;
+    padding: 1rem;
+    overflow: hidden;
+  }
+  .main_image img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .group{
+    display: flex;
+    width: 100%;
+    overflow: auto;
+    height: 15%;
+  }
+  .group>img{
+    height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+    margin-inline: 0.2rem;
+  }
+  .modal_title{
+    grid-area: modal-title;
+    height: fit-content;
+  }
+  .modal h2{
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
+  .modal_description{
+    grid-area: modal-description;
+    margin-bottom: 0.5rem;
+  }
+  .modal_ingridients{
+    grid-area: modal-ingridients;
+    overflow-y: auto;
+  }
+
+  .modal_ingridients>ul{
+    width: 100%;
+  }
+
+  .modal_resume{
+    grid-area: modal-resume;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+    
 }

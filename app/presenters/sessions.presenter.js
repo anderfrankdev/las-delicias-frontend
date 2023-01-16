@@ -1,7 +1,7 @@
 import {getById} from "/libs/dom.lib";
 import {curry} from "/libs/functional.lib";
 
-export const signPresenter = curry( async  ( signModel, state, event)=>{
+export const signPresenter = curry( async  ( Models, state, event)=>{
 
   const validIds = [
     "signup",
@@ -12,6 +12,11 @@ export const signPresenter = curry( async  ( signModel, state, event)=>{
 
   if (!validIds.includes(id)) return
   event.preventDefault()
+  
+  const { 
+      signModel,
+      getPlatesModel
+  } = Models
 
   const inputsAreValid = 
     !(!getById("email").dataset.valid)
@@ -55,13 +60,27 @@ export const signPresenter = curry( async  ( signModel, state, event)=>{
       password:getById("password").value
     }
 
+    const plateData = [
+        "id",
+        "title",
+        "price",
+        "ingridients",
+        "description",
+        "stripe_code",
+        "category",
+        "images"
+    ]
+    const result = await signin(userData)  
 
-    result = await signin(userData)
-
-    appData = result.data.login
+    appData = result?.data?.login
     state.setState = appData
     
-    if (appData) window.location.hash="#home"
+    
+    if (appData) {
+      const plates = await  getPlatesModel(...plateData)
+      state.setPlates = plates.data.getPlates
+      window.location.hash="#home"
+    }
 
 
   }

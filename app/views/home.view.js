@@ -3,12 +3,12 @@ import {curry} from "/libs/functional.lib";
 const plateCards = (items, section )=>{
   let cards="";
 
-  if(section === "menu") items.forEach( item => cards += `
-      <div class="card price">
+  if(section === "menu") items?.forEach( item => cards += `
+      <div class="card" id="${item.id}">
         <img src="${item?.images?item.images[0]:item.img}" class="card_img" alt="">
         <p class="item_tittle">${item.title}</p>
         <p class="item_price">${item.price}$</p>
-        <button class="card_item_btn">Add to cart</button>
+        <button class="card_item_btn">Checkout</button>
         <button class="card_item_btn" style="background-color: #fcf;">Add to favorites</button>
       </div>
     `)
@@ -202,7 +202,8 @@ const menuSectionView = (state)=>{
         "Japanese",
         "Italian",
         "Desserts",
-        "Salads"
+        "Salads",
+        "Venezuelan"
       ]
     )}
     <div class="menu-list">
@@ -392,7 +393,6 @@ const homeView = curry((content,styles,state) => {
     <nav class="nav-bar">
       <div class="nav-icon" onclick="window.location='#home'"><img src="/home.svg" alt=""></div>
       <div class="nav-icon" onclick="window.location='#home/menu'"><img src="/menu.svg" alt=""></div>
-      <div class="nav-icon" onclick="window.location='#home/cart'"><img src="/cart.svg" alt=""></div>
       <div class="nav-icon" onclick="window.location='#home/account'"><img src="/profile.svg" alt=""></div>
     </nav>
     `,
@@ -403,10 +403,49 @@ const homeView = curry((content,styles,state) => {
 
 })
 
-export const plateModal = `
+export const plateModal = (element)=>{
+
+  const deleteModal = `document
+    .getElementById('modal')
+    .remove()`
+  
+  let ingridients = ""
+
+  element.ingridients.forEach(e=>ingridients+=
+  `<li>${e[e.length-1]==="."?e:e+"."}</li>`)
+
+  let groupOfImages = ""
+
+  element.images
+    .forEach(e=>groupOfImages+=`<img src="${e}" alt="">`)
+
+  return `
   <div class="modal" id="modal">
-    <div class="close_modal" id="close_modal">X</div>
-  </div>
-`
+    <div class="close_modal" id="close_modal" onclick="${deleteModal}">X</div>
+    <div class="modal_content">
+      <div class="modal_images">
+        <div class="main_image">
+          <img src="${element.images[0]}" alt="">
+        </div>
+        <div class="group">
+          ${groupOfImages}
+        </div>
+      </div>
+      <div class="modal_title">
+        <h2>${element.title}</h2>
+      </div>
+      <div class="modal_description">${element.description}</div>
+      <div class="modal_ingridients">
+        <h3>Ingridients:</h3>
+        <ul>${ingridients}</ul>
+      </div>
+      <div class="modal_resume">
+        <div class="modal_price">Price: ${element.price}$</div>
+        <input type="number" class="modal_amount" value="1">
+        <input type="button" class="checkout card_item_btn" value="Checkout" name="">
+      </div>
+    </div>
+  </div>`
+}
 
 export default homeView

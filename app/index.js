@@ -37,12 +37,18 @@ const listOfRoutes = f([
   }),
   f({
     url:"#signup",
-    handler:signHandler(checkSessionModel), 
+    handler:signHandler({
+      checkSessionModel,
+      getPlatesModel
+    }), 
     view:signView("signup")
   }),
   f({
     url:"#signin",
-    handler:signHandler(checkSessionModel), 
+    handler:signHandler({
+      checkSessionModel,
+      getPlatesModel
+    }), 
     view:signView("signin")
   }),
   f({
@@ -127,7 +133,10 @@ const listOfEventPresenters = f([
   f({
     element:d,
     type:'click', 
-    presenter:signPresenter(signModel,state)
+    presenter:signPresenter({
+      signModel,
+      getPlatesModel
+    },state)
   }),
   f({
     element:d,
@@ -142,7 +151,7 @@ const listOfEventPresenters = f([
   f({
     element:d,
     type:'click', 
-    presenter:showPlate(plateModal)
+    presenter:showPlate(state,plateModal)
   })
 ]);
 
