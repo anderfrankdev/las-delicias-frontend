@@ -1,6 +1,6 @@
 import {curry} from "/libs/functional.lib";
 
-const plateCards = (items, section )=>{
+export const plateCards = (items, section )=>{
   let cards="";
 
   if(section === "menu") items?.forEach( item => cards += `
@@ -8,7 +8,7 @@ const plateCards = (items, section )=>{
         <img src="${item?.images?item.images[0]:item.img}" class="card_img" alt="">
         <p class="item_tittle">${item.title}</p>
         <p class="item_price">${item.price}$</p>
-        <button class="card_item_btn">Checkout</button>
+        <button class="card_item_btn" id="${item.stripe_code}">Order</button>
         <button class="card_item_btn" style="background-color: #fcf;">Add to favorites</button>
       </div>
     `)
@@ -41,6 +41,19 @@ const plateCards = (items, section )=>{
         <p class="address_state">State: ${item.state}</p>
         <p class="address_zipcode">Zipcode: ${item.zipcode}</p>
         <button class="card_item_btn" style='background:#ddd;'">Delete</button>
+      </div>
+    `)
+  }else if( section === "favorites" ){
+
+    if (items.length<1) cards+=`
+      <p style='text-align:center;'>You have not added any address</p>`
+
+    items.forEach( item => cards += `
+      <div class="card" id="${item.id}">
+        <img src="${item?.images?item.images[0]:item.img}" class="card_img" alt="">
+        <p class="item_tittle">${item.title}</p>
+        <p class="item_price">${item.price}$</p>
+        <button class="card_item_btn">Order</button>
       </div>
     `)
   }
@@ -173,7 +186,7 @@ const menuNav = (items) => {
 
   items.forEach((item,i)=>{
     navHtml+=`
-      <div class="menu-item ${i===0 ? 'selected' : '' }"  >
+      <div class="menu-item ${i===0 ? 'selected' : '' }"  id="${item.split(" ")[0]}">
         <p>${item}</p>
       </div>
     `
@@ -336,7 +349,7 @@ const accountSectionView = (state, section) => {
     <div class="account_orders">
       <div class="back" onclick="window.location='#home/account'"><img src="/arrow.svg" with="40" height="40" alt=""></span></div>
       <div class="cards_container">
-        ${plateCards(ordersArr,"menu")}
+        ${plateCards(ordersArr,"favorites")}
       </div> 
     </div>
   `
@@ -442,7 +455,7 @@ export const plateModal = (element)=>{
       <div class="modal_resume">
         <div class="modal_price">Price: ${element.price}$</div>
         <input type="number" class="modal_amount" value="1">
-        <input type="button" class="checkout card_item_btn" value="Checkout" name="">
+        <input type="button" class="checkout card_item_btn" id="${element.stripe_code}" value="Order" name="">
       </div>
     </div>
   </div>`

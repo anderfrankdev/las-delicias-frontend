@@ -9,6 +9,7 @@ import introductionView from "./views/introduction.view";
 import signView from "./views/sessions.view";
 import {presentationDeliveryView} from "./views/introduction.view";
 import {presentationFoodView} from "./views/introduction.view";
+import {plateCards} from "./views/home.view";
 import homeView from "./views/home.view";
 import {plateModal} from "./views/home.view";
 import homeStyles from "./styles/home.style.css?inline";
@@ -22,6 +23,7 @@ import {checkSessionModel} from "./models/Sessions.model";
 import {getPlatesModel} from "./models/Plates.model"
 import {checkFormInput} from "./presenters/form.presenter";
 import {showPlate} from "./presenters/plates.presenter";
+import {filterMenu} from "./presenters/filterMenu.presenter";
 
 const f = Object.freeze,
   d = document,
@@ -152,6 +154,11 @@ const listOfEventPresenters = f([
     element:d,
     type:'click', 
     presenter:showPlate(state,plateModal)
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:filterMenu(plateCards,state)
   })
 ]);
 
