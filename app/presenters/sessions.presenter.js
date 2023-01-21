@@ -41,7 +41,6 @@ export const signPresenter = curry( async  ( Models, state, event)=>{
 
 
     result = await signup(userData)
-    console.log(result)
 
     appData = result.data.createUser
     state.setState = appData
@@ -70,7 +69,8 @@ export const signPresenter = curry( async  ( Models, state, event)=>{
         "category",
         "images"
     ]
-    const result = await signin(userData)  
+    result = await signin(userData)  
+    console.log(result)
 
     appData = result?.data?.login
     state.setState = appData
@@ -81,7 +81,6 @@ export const signPresenter = curry( async  ( Models, state, event)=>{
       state.setPlates = plates.data.getPlates
       window.location.hash="#home"
     }
-
 
   }
 

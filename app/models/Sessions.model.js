@@ -8,7 +8,15 @@ export const signup = async (newUserData) =>{
       email:"${email}",
       password:"${password}"
     }){
-      name email
+      name email cart
+      addresses{
+        recipient
+        house
+        street
+        city
+        state
+        zipcode
+      }
     }
   }`
   
@@ -33,7 +41,15 @@ export const signin = async (data) =>{
       email:"${data.email}",
       password:"${data.password}"
     }){
-      name email
+      name email cart
+      addresses{
+        recipient
+        house
+        street
+        city
+        state
+        zipcode
+      }
     }
   }`
   

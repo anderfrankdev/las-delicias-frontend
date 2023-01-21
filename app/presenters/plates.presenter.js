@@ -4,12 +4,12 @@ import {getById} from "/libs/dom.lib";
 export const showPlate = curry((state, view, event ) => {
 
 	const selector = `.card,
-	.card > *:not(.card_item_btn):not(.card_item_btn)`
+	.card > *:not(.card_item_btn)`
 	
 	const clicked = event.target.matches(selector)
 
 	if (clicked) {
-
+		if(getById("modal")) return
 		let element;
 
 		if (event.target.matches(`.card`)) {

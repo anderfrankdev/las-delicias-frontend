@@ -4,7 +4,19 @@ import {curry} from "/libs/functional.lib";
 export const introductionHandler = curry(async(checkSessionModel,view,state)=>{
 	if (!state.getState?.name) {
 
-		const neededData = ["name","email"]
+		const neededData = [
+			"name",
+			"email",
+			"cart",
+			`addresses{
+				recipient
+				house
+				street
+				city
+				state
+				zipcode
+			}`
+		]
 		const appData = await checkSessionModel(...neededData)
 		if (appData){
 			state.setState = appData

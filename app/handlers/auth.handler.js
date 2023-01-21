@@ -1,8 +1,9 @@
 import {mountView} from "/libs/dom.lib";
 import {curry} from "/libs/functional.lib";
+import {getById} from "/libs/dom.lib";
 
 export const signHandler = curry(async( Models, view, state) => {
-
+	
 	if (!state.getState?.name) {
 		
 		const { 
@@ -10,7 +11,19 @@ export const signHandler = curry(async( Models, view, state) => {
 		    getPlatesModel
 		} = Models
 		
-		const neededData = ["name","email"]
+		const neededData = [
+			"name",
+			"email",
+			"cart",
+			`addresses{
+				recipient
+				house
+				street
+				city
+				state
+				zipcode
+			}`
+		]
 		const appData = await checkSessionModel(...neededData)
 		if (appData){
 			state.setState = appData
@@ -33,6 +46,7 @@ export const signHandler = curry(async( Models, view, state) => {
 	}else if(state.getState?.name){
 		window.location.hash="#home";
 	}
-	
+	getById("loader").style.display="none"
+	getById("app").style.display="grid"
 
 })

@@ -2,14 +2,14 @@ import {curry} from "/libs/functional.lib";
 
 export const plateCards = (items, section )=>{
   let cards="";
-
   if(section === "menu") items?.forEach( item => cards += `
       <div class="card" id="${item.id}">
         <img src="${item?.images?item.images[0]:item.img}" class="card_img" alt="">
         <p class="item_tittle">${item.title}</p>
         <p class="item_price">${item.price}$</p>
-        <button class="card_item_btn" id="${item.stripe_code}">Order</button>
-        <button class="card_item_btn" style="background-color: #fcf;">Add to favorites</button>
+        <button class="card_item_btn order-btn" id="${item.stripe_code}">Order</button>
+        <button class="card_item_btn cart-btn" style="background-color: #afa;" id="">Add to cart</button>
+        <button class="card_item_btn favorites-btn" style="background-color: #fcf;">Add to favorites</button>
       </div>
     `)
   
@@ -36,7 +36,7 @@ export const plateCards = (items, section )=>{
       <div class="card">
         <p class="address_recipient">Fullname: ${item.recipient}</p>
         <p class="address_house">House number: ${item.house}</p>
-        <p class="address_street">Street: ${item.street}$</p>
+        <p class="address_street">Street: ${item.street}</p>
         <p class="address_city">City: ${item.city}</p>
         <p class="address_state">State: ${item.state}</p>
         <p class="address_zipcode">Zipcode: ${item.zipcode}</p>
@@ -229,15 +229,16 @@ const cartItemsView = (items) => {
   let html = ""
 
   items.forEach(item=>html+=`
-    <div class="cart_item">
+    <div class="cart_item" id="${item.stripe_code}">
       <div class="item_img">
-        <img src="${item.img}" alt="">
+        <img src="${item.images[0]}" alt="">
       </div>
       <p class="item_title">${item.title}</p>
       <div class="item_amount">
-        <input type="number" value="${item.amount}">
+        <div>Quantity:</div>
+        <input class="item_quatity" style="display:block;width:fit-content;" type="number" min="1" value="${Number(item.quantity)}">
       </div>
-      <p class="item_price">${item.price}$</p>
+      <p class="item_price">Price:<br>${item.price}$</p>
       <input type="button" value="Delete" class="item_btn">
     </div>
   `)
@@ -245,27 +246,23 @@ const cartItemsView = (items) => {
   return html
 }
 
-const cartSectionView = (state) => {
+export const cartSectionView = (state) => {
   
-  const cart = [{
-    img:"/toats.jpg",
-    title:"Toats with tomatos",
-    price:3.4,
-    amount:2
-  },{
-    img:"/toats.jpg",
-    title:"Toats with tomatos",
-    price:3.4,
-    amount:2
-  },{
-    img:"/toats.jpg",
-    title:"Toats with tomatos",
-    price:3.4,
-    amount:4
-  }];
+  console.log(state)
+  const cart=state.getState.cart.map(e=>{
+    
+    const [id,quantity] = e
+    
+    const plate = state.getState.plates.filter(a=>
+      a.stripe_code===id
+    )[0]
+
+    return Object.assign(plate,{quantity})
   
+  })
+  console.log(cart)
   const nonfree = cart?.filter(a=>a?.price)
-  const prices = nonfree.map(a=>a.price*a.amount)
+  const prices = nonfree.map(a=>a.price*Number(a.quantity))
 
   const emptyTemplate = `
     <p><strong>Oh... seems like the cart is empty</strong></p>
@@ -280,7 +277,8 @@ const cartSectionView = (state) => {
       </div>
       <div class="cart_count">
         <h2>Summary</h2>
-        <p class="cart_count_estimted"><span>Est. Total:</span> <span>${nonfree.length>0 ? prices.reduce((a,b)=>a+b):0}$</span></p>
+        <p class="cart_count_estimted"><span>Est. Total:</span> <span id="cart_total">${nonfree.length>0 ? 
+          prices.reduce((a,b)=>Number(a)+Number(b)):0}$</span></p>
         <div class="cart_checkout"><span>Secure checkout</span><img src="/triangle.svg" alt="" width="24" height="24"></div>
       </div>
     </div>
@@ -341,7 +339,7 @@ const accountSectionView = (state, section) => {
       <div class="cards_container">
          ${plateCards(addressesArr,"addresses")}
       </div>
-      <button>Add a new address</button>
+      <button id="newAddress">Add a new address</button>
     </div>
   `
 
@@ -400,12 +398,13 @@ const homeView = curry((content,styles,state) => {
       <h1>${title}</h1>
       <img src="/notification.svg" alt="">
     </div>
-    <main class="main-content">
+    <main class="main-content" id="main-content">
       ${mainContent}
     </main>
     <nav class="nav-bar">
       <div class="nav-icon" onclick="window.location='#home'"><img src="/home.svg" alt=""></div>
       <div class="nav-icon" onclick="window.location='#home/menu'"><img src="/menu.svg" alt=""></div>
+      <div class="nav-icon" onclick="window.location='#home/cart'"><img src="/cart.svg" alt=""></div>
       <div class="nav-icon" onclick="window.location='#home/account'"><img src="/profile.svg" alt=""></div>
     </nav>
     `,
@@ -460,5 +459,40 @@ export const plateModal = (element)=>{
     </div>
   </div>`
 }
+
+export const addressModal = `
+  <div class="address_form">
+    <div class="close_modal" id="close_modal" onclick="document.querySelector('.address_form').remove()">X</div>
+    <form action="" >
+      <div class="field_container">
+        <label for="recipient">Fullname:</label>
+        <input type="text" id="recipient">
+      </div>
+      <div class="field_container">
+        <label for="house">House number:</label>
+        <input type="text" id="house">
+      </div>
+      <div class="field_container">
+        <label for="street">Street:</label>
+        <input type="text" id="street">
+      </div>
+      <div class="field_container">
+        <label for="city">City:</label>
+        <input type="text" id="city">
+      </div>
+      <div class="field_container">
+        <label for="state">State:</label>
+        <input id="state" type="text">
+      </div>
+      <div class="field_container">
+        <label for="zipcode">Zipcode:</label>
+        <input type="text" id="zipcode">
+      </div>
+      <div class="field_container">
+        <input type="submit" value="Add new address">
+      </div>
+    </form>
+  </div>
+`
 
 export default homeView

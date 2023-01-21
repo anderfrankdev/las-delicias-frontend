@@ -2,11 +2,14 @@ export default class State{
   #name;
   #email;
   #plates;
+  #cart;
+  #addresses;
   get getState(){
     const state = JSON.parse(JSON.stringify({
       name:this.#name,
       email:this.#email,
-      plates:this.#plates
+      plates:this.#plates,
+      cart:this.#cart
     })) 
     
     return state
@@ -16,8 +19,16 @@ export default class State{
       this.#name = data.name
        
     if(typeof data?.email === "string")
-      this.#email = data.email      
+      this.#email = data.email
+    
+    if(data?.cart?.constructor === Array)
+      this.#cart = data.cart
+
+    if(data?.addresses?.constructor === Array)
+      this.#addresses = data.addresses
+
   }
+  
   set setPlates(plates){
     if (plates?.constructor === Array)
       this.#plates = plates      

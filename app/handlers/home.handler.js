@@ -1,5 +1,6 @@
 import {mountView} from "/libs/dom.lib";
 import {curry} from "/libs/functional.lib";
+import {getById} from "/libs/dom.lib";
 
 export const homeHandler = curry(async(Models ,view,state)=>{
 	
@@ -10,7 +11,19 @@ export const homeHandler = curry(async(Models ,view,state)=>{
 			getPlatesModel
 		} = Models
 		
-		const neededUserData = ["name","email"]
+		const neededData = [
+			"name",
+			"email",
+			"cart",
+			`addresses{
+				recipient
+				house
+				street
+				city
+				state
+				zipcode
+			}`
+		]
 		const plateData = [
 				"id",
 				"title",
@@ -22,7 +35,7 @@ export const homeHandler = curry(async(Models ,view,state)=>{
 				"images"
 		]
 		const [appData,plates] = await Promise.all([
-			checkSessionModel(...neededUserData),
+			checkSessionModel(...neededData),
 			getPlatesModel(...plateData)
 		])
 
@@ -37,5 +50,7 @@ export const homeHandler = curry(async(Models ,view,state)=>{
 	}else if(state.getState?.name){
 		mountView(view,state)
 	}
+	getById("loader").style.display="none"
+	getById("app").style.display="grid"
 
 })

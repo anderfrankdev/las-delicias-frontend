@@ -31,6 +31,7 @@ body{
 
 #app{
   margin: 0;
+  display: none;
 }
 
 ::-webkit-scrollbar {
@@ -46,3 +47,32 @@ body{
   width: 1px;
 }
 
+#loader{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+.login_error{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  left: 1rem;
+  background-color: #69b550;
+  padding-inline: 2rem;
+  padding-block: 1rem;
+  color: #fff;
+}
+.close_btn{
+  background-color: #f00;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

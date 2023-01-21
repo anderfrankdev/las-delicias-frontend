@@ -152,27 +152,7 @@ const signView =(type)=>{
         background-image: url("/bread.jpg");
         background-size: cover;
       }   
-      .login_error{
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        left: 1rem;
-        background-color: #69b550;
-        padding-inline: 2rem;
-        padding-block: 1rem;
-        color: #fff;
-      }
-      .close_btn{
-        background-color: #f00;
-        width: 2rem;
-        height: 2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-      }
+      
       @media (min-width: 37.5em){
         #app{
           grid-template-columns: 3fr 2fr;

@@ -298,7 +298,9 @@
   grid-area: amount;
   width:100%;
   display: flex;
+  flex-direction: column;
   justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .item_price{
@@ -373,7 +375,8 @@
   flex-wrap: wrap;
 }
 
-.modal{
+.modal,
+.address_form{
   width: 100%;
   height: 100vh;
   position: absolute;
@@ -444,6 +447,36 @@
   padding: 0;
   cursor: pointer;
 }
+
+.address_form{
+  display: grid;
+  grid-template-areas: 
+  "close_addr_btn"
+  "addr_form";
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content 1fr;
+}
+
+.address_form > .close_modal{
+  grid-area: close_addr_btn;
+  justify-self: end;
+}
+
+.address_form>form{
+  grid-area:addr_form ;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.address_form>form label{
+  display: block;
+}
+
+
+
 @media (min-width: 37.5em){
   .account_actions{
     padding: 4rem;

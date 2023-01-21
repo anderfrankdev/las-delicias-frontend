@@ -12,6 +12,8 @@ import {presentationFoodView} from "./views/introduction.view";
 import {plateCards} from "./views/home.view";
 import homeView from "./views/home.view";
 import {plateModal} from "./views/home.view";
+import {cartSectionView} from "./views/home.view";
+import {addressModal} from "./views/home.view";
 import homeStyles from "./styles/home.style.css?inline";
 import {introductionHandler} from "./handlers/introduction.handler";
 import {signHandler} from "./handlers/auth.handler";
@@ -20,10 +22,18 @@ import signModel from "./models/Sessions.model";
 import {signoutModel} from "./models/Sessions.model";
 import State from "./models/State.model";
 import {checkSessionModel} from "./models/Sessions.model";
-import {getPlatesModel} from "./models/Plates.model"
+import {getPlatesModel} from "./models/Plates.model";
+import {pay} from "./models/Stripe.model";
+import {addToCartModel} from "./models/User.model";
+import {deleteItemInCart} from "./models/User.model";
 import {checkFormInput} from "./presenters/form.presenter";
 import {showPlate} from "./presenters/plates.presenter";
 import {filterMenu} from "./presenters/filterMenu.presenter";
+import {order} from "./presenters/order.presenter";
+import {addToCart} from "./presenters/cart.presenter";
+import {increaseItem} from "./presenters/cart.presenter";
+import {deleteItem} from "./presenters/cart.presenter";
+import {addAddress} from "./presenters/addresses.presenter";
 
 const f = Object.freeze,
   d = document,
@@ -159,6 +169,37 @@ const listOfEventPresenters = f([
     element:d,
     type:'click', 
     presenter:filterMenu(plateCards,state)
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:order(pay,state)
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:addToCart(addToCartModel,state)
+  }),
+  f({
+    element:d,
+    type:'input', 
+    presenter:increaseItem(
+      addToCartModel,
+      cartSectionView,
+      state)
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:deleteItem(
+      deleteItemInCart,
+      cartSectionView,
+      state)
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:addAddress(addressModal)
   })
 ]);
 
