@@ -9,7 +9,8 @@ export default class State{
       name:this.#name,
       email:this.#email,
       plates:this.#plates,
-      cart:this.#cart
+      cart:this.#cart,
+      addresses:this.#addresses
     })) 
     
     return state

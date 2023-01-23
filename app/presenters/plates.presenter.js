@@ -3,8 +3,8 @@ import {getById} from "/libs/dom.lib";
 
 export const showPlate = curry((state, view, event ) => {
 
-	const selector = `.card,
-	.card > *:not(.card_item_btn)`
+	const selector = `.card:not(.address),
+	.card:not(.address) > *:not(.card_item_btn)`
 	
 	const clicked = event.target.matches(selector)
 

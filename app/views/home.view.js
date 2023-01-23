@@ -9,7 +9,7 @@ export const plateCards = (items, section )=>{
         <p class="item_price">${item.price}$</p>
         <button class="card_item_btn order-btn" id="${item.stripe_code}">Order</button>
         <button class="card_item_btn cart-btn" style="background-color: #afa;" id="">Add to cart</button>
-        <button class="card_item_btn favorites-btn" style="background-color: #fcf;">Add to favorites</button>
+        <button class="card_item_btn favorites-btn" style="display:none;id background-color: #fcf;">Add to favorites</button>
       </div>
     `)
   
@@ -33,14 +33,15 @@ export const plateCards = (items, section )=>{
       <p style='text-align:center;'>You have not added any address</p>`
 
     items.forEach( item => cards += `
-      <div class="card">
+      <div class="card address ${item.main?'main':''}" id="${item.id}">
         <p class="address_recipient">Fullname: ${item.recipient}</p>
         <p class="address_house">House number: ${item.house}</p>
         <p class="address_street">Street: ${item.street}</p>
         <p class="address_city">City: ${item.city}</p>
         <p class="address_state">State: ${item.state}</p>
         <p class="address_zipcode">Zipcode: ${item.zipcode}</p>
-        <button class="card_item_btn" style='background:#ddd;'">Delete</button>
+        ${!item.main?'<button class="card_item_btn selectAddress" style=background:#ff9200;">Select</button>':''}
+        <button class="card_item_btn deleteAddress" style='background:#ddd;'">Delete</button>
       </div>
     `)
   }else if( section === "favorites" ){
@@ -248,7 +249,6 @@ const cartItemsView = (items) => {
 
 export const cartSectionView = (state) => {
   
-  console.log(state)
   const cart=state.getState.cart.map(e=>{
     
     const [id,quantity] = e
@@ -260,7 +260,6 @@ export const cartSectionView = (state) => {
     return Object.assign(plate,{quantity})
   
   })
-  console.log(cart)
   const nonfree = cart?.filter(a=>a?.price)
   const prices = nonfree.map(a=>a.price*Number(a.quantity))
 
@@ -297,29 +296,12 @@ const accountSectionView = (state, section) => {
     }
   ]
 
-  const addressesArr = [
-    {
-      recipient:"Ander Carrasco",
-      house:32,
-      street:"Hoe av.",
-      city:"Miami",
-      state:"Florida",
-      zipcode:37035
-    },{
-      recipient:"Ander Carrasco",
-      house:32,
-      street:"Hoe av.",
-      city:"Miami",
-      state:"Florida",
-      zipcode:37035
-    }
-  ]
-
+  const addressesArr = state.getState.addresses
   const main = `
     <div class="account_actions">
       <p class="action" onclick="window.location='#home/account/orders'">Your previous orders</p>
       <p class="action" onclick="window.location='#home/account/addresses'">Your addresses</p>
-      <p class="action" onclick="window.location='#home/account/favorites'">Your favorite plates</p>
+      <p class="action" style="display:none;" onclick="window.location='#home/account/favorites'">Your favorite plates</p>
       <p class="action logout" id="logout">Logout</p>
     </div>
   `
@@ -489,7 +471,7 @@ export const addressModal = `
         <input type="text" id="zipcode">
       </div>
       <div class="field_container">
-        <input type="submit" value="Add new address">
+        <input type="submit" id="addNewAddress" value="Add new address">
       </div>
     </form>
   </div>

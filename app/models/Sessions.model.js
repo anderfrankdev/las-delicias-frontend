@@ -10,12 +10,14 @@ export const signup = async (newUserData) =>{
     }){
       name email cart
       addresses{
+        id
         recipient
         house
         street
         city
         state
         zipcode
+        main
       }
     }
   }`
@@ -43,12 +45,14 @@ export const signin = async (data) =>{
     }){
       name email cart
       addresses{
+        id
         recipient
         house
         street
         city
         state
         zipcode
+        main
       }
     }
   }`

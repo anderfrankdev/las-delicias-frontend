@@ -16,12 +16,14 @@ export const homeHandler = curry(async(Models ,view,state)=>{
 			"email",
 			"cart",
 			`addresses{
+				id
 				recipient
 				house
 				street
 				city
 				state
 				zipcode
+				main
 			}`
 		]
 		const plateData = [

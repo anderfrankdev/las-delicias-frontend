@@ -9,12 +9,14 @@ export const introductionHandler = curry(async(checkSessionModel,view,state)=>{
 			"email",
 			"cart",
 			`addresses{
+				id				
 				recipient
 				house
 				street
 				city
 				state
 				zipcode
+				main
 			}`
 		]
 		const appData = await checkSessionModel(...neededData)

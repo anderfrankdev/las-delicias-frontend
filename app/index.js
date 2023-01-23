@@ -26,6 +26,9 @@ import {getPlatesModel} from "./models/Plates.model";
 import {pay} from "./models/Stripe.model";
 import {addToCartModel} from "./models/User.model";
 import {deleteItemInCart} from "./models/User.model";
+import {addAddressModel} from "./models/User.model";
+import {deleteAddressModel} from "./models/User.model";
+import {selectAddressModel} from "./models/User.model";
 import {checkFormInput} from "./presenters/form.presenter";
 import {showPlate} from "./presenters/plates.presenter";
 import {filterMenu} from "./presenters/filterMenu.presenter";
@@ -34,6 +37,8 @@ import {addToCart} from "./presenters/cart.presenter";
 import {increaseItem} from "./presenters/cart.presenter";
 import {deleteItem} from "./presenters/cart.presenter";
 import {addAddress} from "./presenters/addresses.presenter";
+import {deleteAddress} from "./presenters/addresses.presenter";
+import {selectAddress} from "./presenters/addresses.presenter";
 
 const f = Object.freeze,
   d = document,
@@ -118,6 +123,11 @@ const listOfRoutes = f([
       getPlatesModel
     }), 
     view:homeView('account/favorites',homeStyles)
+  }),
+  f({
+    url:"#payment",
+    handler:homeHandler(checkSessionModel), 
+    view:''
   })
 ]);
 
@@ -199,7 +209,26 @@ const listOfEventPresenters = f([
   f({
     element:d,
     type:'click', 
-    presenter:addAddress(addressModal)
+    presenter:addAddress(
+      addAddressModel,
+      state,
+      addressModal)
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:deleteAddress(
+      deleteAddressModel,
+      state,
+      plateCards)
+  }),
+  f({
+    element:d,
+    type:'click', 
+    presenter:selectAddress(
+      selectAddressModel,
+      state,
+      plateCards)
   })
 ]);
 

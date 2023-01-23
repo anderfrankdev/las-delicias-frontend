@@ -373,6 +373,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal,
@@ -475,6 +477,14 @@
   display: block;
 }
 
+.address.main{
+  background-color: #00fa00;
+}
+
+.address{
+  height: fit-content;
+  width: 300px;
+}
 
 
 @media (min-width: 37.5em){
@@ -618,5 +628,11 @@
     justify-content: flex-end;
     flex-direction: column;
   }
-    
+  .cards_container{
+    justify-content: initial;
+    align-items: initial;
+  }
+  .address{
+    width: initial;
+  }
 }
