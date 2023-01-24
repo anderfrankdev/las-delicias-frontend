@@ -9,6 +9,7 @@ import introductionView from "./views/introduction.view";
 import signView from "./views/sessions.view";
 import {presentationDeliveryView} from "./views/introduction.view";
 import {presentationFoodView} from "./views/introduction.view";
+import {paymentView} from "./views/payment.view";
 import {plateCards} from "./views/home.view";
 import homeView from "./views/home.view";
 import {plateModal} from "./views/home.view";
@@ -18,6 +19,7 @@ import homeStyles from "./styles/home.style.css?inline";
 import {introductionHandler} from "./handlers/introduction.handler";
 import {signHandler} from "./handlers/auth.handler";
 import {homeHandler} from "./handlers/home.handler";
+import {paymentHandler} from "./handlers/payment.handler";
 import signModel from "./models/Sessions.model";
 import {signoutModel} from "./models/Sessions.model";
 import State from "./models/State.model";
@@ -29,6 +31,7 @@ import {deleteItemInCart} from "./models/User.model";
 import {addAddressModel} from "./models/User.model";
 import {deleteAddressModel} from "./models/User.model";
 import {selectAddressModel} from "./models/User.model";
+import {processPaymentModel} from "./models/Order.model";
 import {checkFormInput} from "./presenters/form.presenter";
 import {showPlate} from "./presenters/plates.presenter";
 import {filterMenu} from "./presenters/filterMenu.presenter";
@@ -126,8 +129,8 @@ const listOfRoutes = f([
   }),
   f({
     url:"#payment",
-    handler:homeHandler(checkSessionModel), 
-    view:''
+    handler:paymentHandler(processPaymentModel), 
+    view:paymentView
   })
 ]);
 
