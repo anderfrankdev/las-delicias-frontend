@@ -1,5 +1,5 @@
-const successful = `
-	<div class="paymentResult">
+const successful =`
+	<div class="paymentResult" style="padding-top:3rem;">
 		<div style="text-align:center;"><img width="150" height="150" src="/credit-card.svg" alt=""></div></div>
 		<div style="text-align:center;">
 			<strong>Thank You for your order!</strong>
@@ -32,8 +32,18 @@ const addressView = address => `
 	</div>
 `
 
+const failed = `
+	<div class="paymentResult" style="padding-top:3rem;">
+		<div style="text-align:center;"><img width="150" height="150" src="/credit-card.svg" alt=""></div></div>
+		<div style="text-align:center;">
+			<strong>Thank You for your order!</strong>
+		</div>
+	</div>
+`
+
 export const paymentView = result => `
 	${result.successful?successful:''}	
 	${result.successful?tableOrder(result.order):''}	
-	${result.successful?addressView(result.address):''}	
+	${result.successful?addressView(result.address):''}
+	<p style="text-align:center; cursor:pointer; text-decoration:underline;color:#005;"  onclick="location.hash='#home'">Go to Home page</p>
 `;

@@ -1,3 +1,8 @@
+const url = window.location.origin.includes("localhost")
+  ? "http://localhost:8080/api"
+  : "https://lasdelicias.fly.dev/api";
+
+
 export const signup = async (newUserData) =>{
   
   const {name,email,password} = newUserData
@@ -22,7 +27,7 @@ export const signup = async (newUserData) =>{
     }
   }`
   
-  const userData = await fetch('http://localhost:8080/api',{
+  const userData = await fetch(url,{
     method:"POST",
     headers:{"Content-Type": "application/json; charset=utf-8" },
     mode:"cors",
@@ -57,7 +62,7 @@ export const signin = async (data) =>{
     }
   }`
   
-  const userData = await fetch('http://localhost:8080/api',{
+  const userData = await fetch(url,{
     method:"POST",
     mode:"cors",
     credentials:"include",
@@ -79,7 +84,7 @@ export const signoutModel = async () =>{
     }
   }`
 
-  const userData = await fetch('http://localhost:8080/api',{
+  const userData = await fetch(url,{
     method:"POST",
     mode:"cors",
     credentials:"include",
@@ -100,7 +105,7 @@ export const checkSessionModel = async (...toRequest) =>{
     }
   }`
   
-  const userData = await fetch('http://localhost:8080/api',{
+  const userData = await fetch(url,{
     method:"POST",
     headers:{"Content-Type": "application/json; charset=utf-8" },
     mode:"cors",

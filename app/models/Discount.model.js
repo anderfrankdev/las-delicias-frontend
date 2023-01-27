@@ -3,10 +3,10 @@ const url = window.location.origin.includes("localhost")
 	: "https://lasdelicias.fly.dev/api";
 
 
-export const getPlatesModel = async (...toRequest) => {
+export const getDicountModel = async (...toRequest) => {
 
 	const query = `{
-	  getPlates{
+	  getDiscounts{
 	    ${toRequest.toString().replace(","," ")}
 	  }
 	}`

@@ -30,5 +30,7 @@ export const paymentHandler = curry(async( processPayment, view, state) => {
 		loader("off")
 	}
 
+	if (!result.successful) window.location.hash="#home"
+
 	console.log(payment)
 })

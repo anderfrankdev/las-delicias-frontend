@@ -11,7 +11,7 @@ export const addToCart = curry(async(addToCart,state,event)=>{
 		getById("app").style.display="none"
 		const plates = state.getState.plates
 		const plate = plates
-			.filter(e=>e.id===event.target.parentElement.id)[0]
+			.filter(e=>e.stripe_code===event.target.parentElement.dataset.id)[0];
 
 		const data = [[plate.stripe_code,"1"]]
 		

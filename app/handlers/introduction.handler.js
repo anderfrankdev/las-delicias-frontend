@@ -1,15 +1,22 @@
 import {mountView} from "/libs/dom.lib";
 import {curry} from "/libs/functional.lib";
+import {getById} from "/libs/dom.lib";
 
-export const introductionHandler = curry(async(checkSessionModel,view,state)=>{
+export const introductionHandler = curry(async(Models,view,state)=>{
 	if (!state.getState?.name) {
 
+		const { 
+			checkSessionModel,
+			getPlatesModel,
+			getDicountModel
+		} = Models
+		
 		const neededData = [
 			"name",
 			"email",
 			"cart",
 			`addresses{
-				id				
+				id
 				recipient
 				house
 				street
@@ -19,14 +26,49 @@ export const introductionHandler = curry(async(checkSessionModel,view,state)=>{
 				main
 			}`
 		]
-		const appData = await checkSessionModel(...neededData)
+		const plateData = [
+				"id",
+				"title",
+				"price",
+				"ingridients",
+				"description",
+				"stripe_code",
+				"category",
+				"images"
+		]
+		const dataDiscounts = [
+			"title",
+			"stripe_price",
+		    "stripe_discount",
+		    "percentage",
+		    "image"
+		]
+		const [appData,plates,discounts] = await Promise.all([
+			checkSessionModel(...neededData),
+			getPlatesModel(...plateData),
+			getDicountModel(...dataDiscounts)
+		])
+
 		if (appData){
+			
+			const {data} = plates
+			
 			state.setState = appData
+			
+			state.setPlates = data.getPlates
+			
+			state.setDiscounts = discounts
+				.data.getDiscounts
 			window.location.hash="#home";
-		}else if (!appData) 
-			mountView(view,state)	
-	
+		}else if (!appData) {
+			
+			mountView(view,state)
+		}
+
 	}else if(state.getState?.name){
-		window.location.hash="#home";
+		mountView(view,state)
 	}
+	getById("loader").style.display="none"
+	getById("app").style.display="grid"
+
 })

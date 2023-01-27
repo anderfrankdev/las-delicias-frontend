@@ -4,13 +4,15 @@ export default class State{
   #plates;
   #cart;
   #addresses;
+  #discounts;
   get getState(){
     const state = JSON.parse(JSON.stringify({
       name:this.#name,
       email:this.#email,
       plates:this.#plates,
       cart:this.#cart,
-      addresses:this.#addresses
+      addresses:this.#addresses,
+      discounts:this.#discounts
     })) 
     
     return state
@@ -27,14 +29,16 @@ export default class State{
 
     if(data?.addresses?.constructor === Array)
       this.#addresses = data.addresses
-
   }
   
   set setPlates(plates){
     if (plates?.constructor === Array)
       this.#plates = plates      
   }
-  
+  set setDiscounts(discounts){
+    if (discounts?.constructor === Array)
+      this.#discounts = discounts      
+  }
   deleteState(){
     this.#name  = undefined ,
     this.#email = undefined ,

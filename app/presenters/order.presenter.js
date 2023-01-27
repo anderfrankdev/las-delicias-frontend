@@ -4,7 +4,8 @@ import {getById} from "/libs/dom.lib";
 export const order = curry( async (payModel, state,event)=>{
 	const selector = `.card_item_btn.checkout,
 	.card_item_btn,
-	.cart_checkout`
+	.cart_checkout,
+	.order_special`
 	
 	const clicked = event.target.matches(selector)
 	
@@ -28,6 +29,12 @@ export const order = curry( async (payModel, state,event)=>{
 		}else if(event.target.matches(".cart_checkout")){
 
 			result = await payModel(state.getState.cart)
+		}else if(event.target.matches(".order_special")){
+			console.log(event.target.dataset)
+			const price = event.target.dataset.price
+			const coupon = event.target.dataset.coupon
+			console.log(price,coupon)
+			result = await payModel([[price,"1"]],coupon)
 		}
 
 		if (result?.data?.pay?.url) {

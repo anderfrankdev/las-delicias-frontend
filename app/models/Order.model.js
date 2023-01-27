@@ -1,3 +1,9 @@
+const url = window.location.origin.includes("localhost")
+	? "http://localhost:8080/api"
+	: "https://lasdelicias.fly.dev/api";
+
+
+
 export const processPaymentModel = async (...toRequest) => {
 
 	const query = `{
@@ -6,7 +12,7 @@ export const processPaymentModel = async (...toRequest) => {
 		}
 	}`
 
-	const res = await fetch('http://localhost:8080/api',{
+	const res = await fetch(url,{
 	    method:"POST",
 	    headers:{"Content-Type": "application/json; charset=utf-8" },
 	    mode:"cors",

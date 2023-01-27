@@ -25,6 +25,7 @@ import {signoutModel} from "./models/Sessions.model";
 import State from "./models/State.model";
 import {checkSessionModel} from "./models/Sessions.model";
 import {getPlatesModel} from "./models/Plates.model";
+import {getDicountModel} from "./models/Discount.model";
 import {pay} from "./models/Stripe.model";
 import {addToCartModel} from "./models/User.model";
 import {deleteItemInCart} from "./models/User.model";
@@ -52,22 +53,28 @@ let state = new State();
 const listOfRoutes = f([
   f({
     url:"#introduction",
-    handler:introductionHandler(checkSessionModel), 
+    handler:introductionHandler({
+      checkSessionModel,
+      getPlatesModel,
+      getDicountModel
+    }), 
     view:introductionView
   }),
   f({
     url:"#signup",
-    handler:signHandler({
+    handler:introductionHandler({
       checkSessionModel,
-      getPlatesModel
+      getPlatesModel,
+      getDicountModel
     }), 
     view:signView("signup")
   }),
   f({
     url:"#signin",
-    handler:signHandler({
+    handler:introductionHandler({
       checkSessionModel,
-      getPlatesModel
+      getPlatesModel,
+      getDicountModel
     }), 
     view:signView("signin")
   }),
@@ -75,7 +82,8 @@ const listOfRoutes = f([
     url:"#home",
     handler:homeHandler({
       checkSessionModel,
-      getPlatesModel
+      getPlatesModel,
+      getDicountModel
     }), 
     view:homeView('home',homeStyles)
   }),
@@ -83,7 +91,8 @@ const listOfRoutes = f([
     url:"#home/menu",
     handler:homeHandler({
       checkSessionModel,
-      getPlatesModel
+      getPlatesModel,
+      getDicountModel
     }), 
     view:homeView('menu',homeStyles)
   }),
@@ -91,7 +100,8 @@ const listOfRoutes = f([
     url:"#home/cart",
     handler:homeHandler({
       checkSessionModel,
-      getPlatesModel
+      getPlatesModel,
+      getDicountModel
     }), 
     view:homeView('cart',homeStyles)
   }),
@@ -99,7 +109,8 @@ const listOfRoutes = f([
     url:"#home/account",
     handler:homeHandler({
       checkSessionModel,
-      getPlatesModel
+      getPlatesModel,
+      getDicountModel
     }), 
     view:homeView('account',homeStyles)
   }),
@@ -107,7 +118,8 @@ const listOfRoutes = f([
     url:"#home/account/addresses",
     handler:homeHandler({
       checkSessionModel,
-      getPlatesModel
+      getPlatesModel,
+      getDicountModel
     }), 
     view:homeView('account/addresses',homeStyles)
   }),
@@ -115,7 +127,8 @@ const listOfRoutes = f([
     url:"#home/account/orders",
     handler:homeHandler({
       checkSessionModel,
-      getPlatesModel
+      getPlatesModel,
+      getDicountModel
     }), 
     view:homeView('account/orders',homeStyles)
   }),
@@ -123,14 +136,15 @@ const listOfRoutes = f([
     url:"#home/account/favorites",
     handler:homeHandler({
       checkSessionModel,
-      getPlatesModel
+      getPlatesModel,
+      getDicountModel
     }), 
     view:homeView('account/favorites',homeStyles)
   }),
   f({
     url:"#payment",
     handler:paymentHandler(processPaymentModel), 
-    view:paymentView
+    view:paymentView,
   })
 ]);
 
@@ -160,7 +174,8 @@ const listOfEventPresenters = f([
     type:'click', 
     presenter:signPresenter({
       signModel,
-      getPlatesModel
+      getPlatesModel,
+      getDicountModel
     },state)
   }),
   f({

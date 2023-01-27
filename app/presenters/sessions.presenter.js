@@ -15,7 +15,8 @@ export const signPresenter = curry( async  ( Models, state, event)=>{
   
   const { 
       signModel,
-      getPlatesModel
+      getPlatesModel,
+      getDicountModel
   } = Models
 
   const inputsAreValid = 
@@ -45,7 +46,32 @@ export const signPresenter = curry( async  ( Models, state, event)=>{
     appData = result.data.createUser
     state.setState = appData
     
-    if (appData) window.location.hash="#home"
+    if (appData){
+      const dataDiscounts = [
+        "title",
+        "stripe_price",
+        "stripe_discount",
+        "percentage",
+        "image"
+      ]
+      const plateData = [
+        "id",
+        "title",
+        "price",
+        "ingridients",
+        "description",
+        "stripe_code",
+        "category",
+        "images"
+    ]
+      const [plates,discounts] = await Promise.all([
+        getPlatesModel(...plateData),
+        getDicountModel(...dataDiscounts)
+      ])
+      state.setPlates = plates.data.getPlates
+      state.setDiscounts = discounts.data.getDiscounts
+      window.location.hash="#home";
+    }
 
 
   }else if(event.target.id==="signin"){
@@ -77,8 +103,19 @@ export const signPresenter = curry( async  ( Models, state, event)=>{
     
     
     if (appData) {
-      const plates = await  getPlatesModel(...plateData)
+      const dataDiscounts = [
+        "title",
+        "stripe_price",
+        "stripe_discount",
+        "percentage",
+        "image"
+      ]
+      const [plates,discounts] = await Promise.all([
+        getPlatesModel(...plateData),
+        getDicountModel(...dataDiscounts)
+      ])
       state.setPlates = plates.data.getPlates
+      state.setDiscounts = discounts.data.getDiscounts
       window.location.hash="#home"
     }
 

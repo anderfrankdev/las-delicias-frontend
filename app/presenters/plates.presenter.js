@@ -14,10 +14,10 @@ export const showPlate = curry((state, view, event ) => {
 
 		if (event.target.matches(`.card`)) {
 			element = state.getState.plates
-				.filter(e=>e.id===event.target.id)[0]
+				.filter(e=>e.stripe_code===event.target.dataset.id)[0]
 		}else{
 			element = state.getState.plates
-				.filter(e=>e.id===event.target.parentElement.id)[0]
+				.filter(e=>e.stripe_code===event.target.parentElement.dataset.id)[0]
 		}
 		
 		getById("app").innerHTML+= view(element)

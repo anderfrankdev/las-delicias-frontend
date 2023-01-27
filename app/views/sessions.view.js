@@ -13,7 +13,10 @@
       <label for="password">Password</label>
       <input type="password" id="password" data-valid="">
     </div>
-    <div class="sign-options"><a href="">Forgot your password?</a><a href="#signin">Have an account?</a></div>
+    <div class="sign-options">
+      <a href="">Forgot your password?</a>
+      <span style="cursor:pointer; color:#478223; font-weight:bolder;" onclick="location.hash='#signin'">Have an account?</span>
+    </div>
     <input type="submit" value="Sign up" id="signup" >
   </form>
 `
@@ -29,7 +32,10 @@ const signinForm = `
       <label for="password">Password</label>
       <input type="password" id="password" data-valid="">
     </div>
-    <div class="sign-options"><a href="">Forgot your password?</a><a href="#signup">Need an account?</a></div>
+    <div class="sign-options">
+      <a href="">Forgot your password?</a>
+      <span style="cursor:pointer; color:#478223; font-weight:bolder;" onclick="location.hash='#signup'">Need an account?</span>
+    </div>
     <input type="submit" value="Sign in" id="signin" >
   </form>
 `

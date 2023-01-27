@@ -8,7 +8,8 @@ export const homeHandler = curry(async(Models ,view,state)=>{
 
 		const { 
 			checkSessionModel,
-			getPlatesModel
+			getPlatesModel,
+			getDicountModel
 		} = Models
 		
 		const neededData = [
@@ -36,15 +37,24 @@ export const homeHandler = curry(async(Models ,view,state)=>{
 				"category",
 				"images"
 		]
-		const [appData,plates] = await Promise.all([
+		const dataDiscounts = [
+				"title",
+				"stripe_price",
+			    "stripe_discount",
+			    "percentage",
+			    "image"
+			]
+		const [appData,plates,discounts] = await Promise.all([
 			checkSessionModel(...neededData),
-			getPlatesModel(...plateData)
+			getPlatesModel(...plateData),
+			getDicountModel(...dataDiscounts)
 		])
 
 		if (appData){
 			const {data} = plates
 			state.setState = appData
 			state.setPlates = data.getPlates
+			state.setDiscounts = discounts.data.getDiscounts
 			mountView(view,state)	
 		}else if (!appData) 
 			window.location.hash="#signin";

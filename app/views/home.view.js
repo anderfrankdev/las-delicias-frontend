@@ -2,8 +2,10 @@ import {curry} from "/libs/functional.lib";
 
 export const plateCards = (items, section )=>{
   let cards="";
-  if(section === "menu") items?.forEach( item => cards += `
-      <div class="card" id="${item.id}">
+  if(section === "menu"){
+
+    items?.forEach( item => cards += `
+      <div class="card" data-id="${item.stripe_code}">
         <img src="${item?.images?item.images[0]:item.img}" class="card_img" alt="">
         <p class="item_tittle">${item.title}</p>
         <p class="item_price">${item.price}$</p>
@@ -12,14 +14,14 @@ export const plateCards = (items, section )=>{
         <button class="card_item_btn favorites-btn" style="display:none;id background-color: #fcf;">Add to favorites</button>
       </div>
     `)
-  
+  }
   else if(section === "orders") {
 
     if (items.length<1) cards+="<p style='text-align:center;'>You have not done any order</p>"
 
-    items.forEach( item => cards += `
+    items?.forEach( item => cards += `
       <div class="card">
-        <img src="${item.img}" alt="">
+        <img src="${item.images[0]}" alt="">
         <p class="item_tittle">${item.title}</p>
         <p>Amount: ${item.amount}</p>
         <p class="item_price">Price: ${item.price}$</p>
@@ -82,14 +84,14 @@ const searchBar = `
 
 const specialPlatesView = (specials)=>{
   let html = ""
-
+  console.log(specials)
   specials.forEach(special => {
     html += `
       <div class="special-plate">
         <h2>${special.title}</h2>
-        <p class="discount">Discount ${special.discount}%</p>
-        <button>Order now</button>
-        <img src="${special.img}" alt="">
+        <p class="discount">Discount ${special.percentage}%</p>
+        <button class="order_special" data-price="${special.stripe_price}" data-coupon="${special.stripe_discount}">Order now</button>
+        <img src="${special.image}" alt="">
       </div>
     `
   })
@@ -99,85 +101,17 @@ const specialPlatesView = (specials)=>{
 
 const homeSectionView = (state)=>{
 
-  const items = [
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4
-    }
-  ]
+  const items = state.getState.plates
 
-  const specials = [
-    {
-      img:"/oreo-cake.webp",
-      title:"Oreo cake",
-      price:3.4,
-      discount:27
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4,
-      discount:27
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4,
-      discount:27
-    },
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4,
-      discount:27
-    }
-  ]
+  const specials = state.getState.discounts
 
   return `
     ${searchBar}
     <div class="special">
       ${specialPlatesView(specials)}
     </div>
-    
-    ${carrouselView("Top of the week",items)}
-    ${carrouselView("Most popular",items)}
-    ${carrouselView("Best sellers",items)}
+
+    ${carrouselView("Our plates",items)}
   `
 }
 
@@ -287,19 +221,13 @@ export const cartSectionView = (state) => {
 const accountSectionView = (state, section) => {
   
   const ordersArr = [
-    {
-      img:"/toats.jpg",
-      title:"Toats with tomatos",
-      price:3.4,
-      date:new Date(),
-      amount: 9
-    }
+    
   ]
 
   const addressesArr = state.getState.addresses
   const main = `
     <div class="account_actions">
-      <p class="action" onclick="window.location='#home/account/orders'">Your previous orders</p>
+      <p class="action" style="display:none;" onclick="window.location='#home/account/orders'">Your previous orders</p>
       <p class="action" onclick="window.location='#home/account/addresses'">Your addresses</p>
       <p class="action" style="display:none;" onclick="window.location='#home/account/favorites'">Your favorite plates</p>
       <p class="action logout" id="logout">Logout</p>
